@@ -1,0 +1,7 @@
+#logging:
+#  level:
+#    root: ERROR
+#    org:
+#      springframework:
+#        web: ERROR
+#      hibernate: ERROR
