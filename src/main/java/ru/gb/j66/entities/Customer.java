@@ -26,7 +26,7 @@ public class Customer
 /*  Покупатель не связан напрямую с таблицей products.  */
 
 
-    private Customer()
+    protected Customer()
     {
         orderDatas = OrderData.emptyOrderDatatList();
     }

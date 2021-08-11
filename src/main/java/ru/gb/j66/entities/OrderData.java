@@ -29,7 +29,7 @@ public class OrderData
     private double cost;
 
 
-    private OrderData(){}
+    protected OrderData(){}
 
     public static OrderData newOrderData (Customer customer, Product product, double cost)
     {

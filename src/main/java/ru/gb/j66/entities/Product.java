@@ -27,7 +27,7 @@ public class Product
 
 /*  Продукт не может быть напрямую связан с покупателем.    */
 
-    private Product()
+    protected Product()
     {
         orderDatas = OrderData.emptyOrderDatatList();
     }
