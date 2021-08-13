@@ -86,9 +86,18 @@ public class MainApp
         OrdersDao odao = context.getBean(OrdersDao.class);
         CustomerInfo ci = context.getBean(CustomerInfo.class);
 
-        Customer c = cdao.createCastomer ("Толик");
-        Product p = pdao.createProduct ("Велик", cost);
-        OrderData od = odao.save (c, p, cost);
+        Customer c = cdao.createCastomer ("Толик");     System.out.printf("\nДобавлен покупатель : %s.", c);
+        Product p = pdao.createProduct ("Велик", cost); System.out.printf("\nПоступил товар : %s.", p);
+        OrderData od = odao.save (c, p, cost);          System.out.printf("\nТолик купил Велик : %s.", od);
+
+        try(Session s = sessionFactory.getCurrentSession())
+        {
+            s.beginTransaction();
+            p.setCost(155.0);
+            s.update(p);
+            s.getTransaction().commit();
+            System.out.printf("\nЦена на Велик поднялась до %.2f : %s.", p.getCost(), p);
+        }
 
         System.out.println(SEPARATOR);  //------------------
         try(Session s = sessionFactory.getCurrentSession())
@@ -100,11 +109,12 @@ public class MainApp
             printList (s.createQuery("from OrderData", OrderData.class).getResultList());
 
             System.out.printf("Список продуктов покупателя с cid = %d:\n\n", cid);
-            printList(ci.getProductsByCustomerId(cid, s));
+            printList (ci.getProductsByCustomerId(cid, s));
 
             System.out.printf("Список покупателей продукта с pid = %d:\n\n", pid);
-            printList(ci.getCustomersByProductId(pid, s));
+            printList (ci.getCustomersByProductId(pid, s));
 
+            s.createNativeQuery("select * from customer_products;").getResultList().forEach(System.out::println); //< список содержит объекты, каждый из которых содержит массив из двух BigInteger. (Для этой таблицы класс-сущность не создан.)
             s.getTransaction().commit();
         }
     }

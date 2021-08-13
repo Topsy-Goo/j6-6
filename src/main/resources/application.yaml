@@ -5,3 +5,4 @@
 #      springframework:
 #        web: ERROR
 #      hibernate: ERROR
+# Этот способ отключения логирования не работает. Работает способ отключения через файл logback.xml.
